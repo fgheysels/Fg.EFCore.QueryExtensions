@@ -46,7 +46,7 @@ namespace Fg.EFCore.QueryExtensions.Tests
                 dbContext.SaveChanges();
 
                 var results = await dbContext.Vessels
-                                             .Where(FilterExpression.LikeOneOf<Vessel>(nameof(Vessel.Name), new[] { "%auti%", "%boat%" }))
+                                             .Where(DbFilterExpression.LikeOneOf<Vessel>(nameof(Vessel.Name), new[] { "%auti%", "%boat%" }))
                                              .ToListAsync();
 
                 Assert.Contains(results, v => v.Name.Equals("Nautilus"));

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fg.EFCore.QueryExtensions
 {
-    public static class FilterExpression
+    public static class DbFilterExpression
     {
         public static Expression<Func<T, bool>> LikeOneOf<T>(string propertyName, IEnumerable<string> values)
         {
