@@ -17,7 +17,7 @@ pr:
 stages:
   - stage: Build
     jobs:
-      - job: Compile & Test
+      - job: Compile_and_test
         pool:
           vmImage: 'ubuntu-16.04'
         steps:
