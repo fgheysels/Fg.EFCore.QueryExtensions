@@ -8,6 +8,10 @@ trigger:
     include:
       - src/*
 
+variables:
+- name: Build.Configuration
+  value: 'Release'
+
 stages:
   - stage: Build
     jobs:
@@ -39,7 +43,7 @@ stages:
               includesymbols: true
               includesource: true
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
-              arguments: --configuration Release --output $(Pipeline.Workspace)/nupkg
+              arguments: --configuration $(Build.Configuration) --output $(Pipeline.Workspace)/nupkg
           - task: NuGetCommand@2
             displayName: 'Push to NuGet.org'
             inputs:
