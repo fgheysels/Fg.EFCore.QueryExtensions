@@ -34,6 +34,7 @@ stages:
         steps:
           - task: DotNetCoreCLI@2
             displayName: Package nuget Package
+            inputs:
               command: 'pack'
               includesymbols: true
               includesource: true
