@@ -1,0 +1,33 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - src/*
+
+pr:
+  paths:
+    include:
+      - src/*
+      - build/ci-build.yml
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Compile
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'Build EFCore.QueryExtensions solution'
+            inputs:
+              projects: 'src/Fg.EFCore.QueryExtensions.sln'
+          - task: DotNetCoreCLI@2
+            displayName: 'Run unittests'
+            inputs:
+              command: 'test'
+              projects: 'src/Fg.EFCore.QueryExtensions.Tests/*.csproj'
+              testRunTitle: 'EFCore.QueryExtensions unittests'             
