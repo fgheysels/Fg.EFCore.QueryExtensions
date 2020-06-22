@@ -1,0 +1,48 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - src/*
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Compile_and_test
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'Build EFCore.QueryExtensions solution'
+            inputs:
+              projects: 'src/Fg.EFCore.QueryExtensions.sln'
+              arguments: --configuration $(Build.Configuration)
+          - task: DotNetCoreCLI@2
+            displayName: 'Run unittests'
+            inputs:
+              command: 'test'
+              projects: 'src/Fg.EFCore.QueryExtensions.Tests/*.csproj'
+              testRunTitle: 'EFCore.QueryExtensions unittests' 
+  - stage: Release
+    jobs:
+      - job: Package_and_push
+        pool:
+          vmImage: 'ubuntu-16.04'  
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: Package nuget Package
+              command: 'pack'
+              includesymbols: true
+              includesource: true
+              projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
+              arguments: --configuration Release --output $(Pipeline.Workspace)/nupkg
+          - task: NuGetCommand@2
+            displayName: 'Push to NuGet.org'
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)/nupkg/*.nupkg'
+              nuGetFeedType: external
+              publishFeedCredentials: 'nuget-push'
