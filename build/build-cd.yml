@@ -43,11 +43,16 @@ stages:
               includesymbols: true
               includesource: true
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
-              arguments: --configuration $(Build.Configuration) --output $(Pipeline.Workspace)/nupkg
+              arguments: --configuration $(Build.Configuration) --output $(Build.StagingDirectory)/nupkg
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish artifact'
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)'
+              artifact: 'artefact'
           - task: NuGetCommand@2
             displayName: 'Push to NuGet.org'
             inputs:
               command: push
-              packagesToPush: '$(Pipeline.Workspace)/nupkg/*.nupkg'
+              packagesToPush: '$(Build.StagingDirectory)/nupkg/*.nupkg'
               nuGetFeedType: external
               publishFeedCredentials: 'nuget-push'
