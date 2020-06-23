@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>Provides extra functionality for querying relational databases using EF Core.</Description>
+    <Author>Frederik Gheysels</Author>
+    <PackageProjectUrl>https://github.com/fgheysels/Fg.EFCore.QueryExtensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/fgheysels/Fg.EFCore.QueryExtensions</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
