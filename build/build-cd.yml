@@ -44,8 +44,7 @@ stages:
             displayName: 'Set NugetPackageVersion environment variable'
             inputs:
               targetType: inline
-              script: Environment]::SetEnvironmentVariable("NugetPackageVersion", "${{parameters.PackageMajorVersion}}.${{parameters.PackageMinorVersion}}.${{parameters.PackagePatchVersion}}", "User")
-        steps:
+              script: [Environment]::SetEnvironmentVariable("NugetPackageVersion", "${{parameters.PackageMajorVersion}}.${{parameters.PackageMinorVersion}}.${{parameters.PackagePatchVersion}}", "User")        
           - task: DotNetCoreCLI@2
             displayName: Package nuget Package
             inputs:
