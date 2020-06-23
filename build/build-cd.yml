@@ -46,12 +46,13 @@ stages:
               command: 'pack'
               includesymbols: false
               includesource: false
+              versioningScheme: byPrereleaseNumber
               majorVersion: ${{ parameters.PackageMajorVersion }} 
               minorVersion: ${{ parameters.PackageMinorVersion }} 
               patchVersion: ${{ parameters.PackagePatchVersion }} 
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
               arguments: --configuration $(Build.Configuration)
-              packDestination: $(Build.StagingDirectory)/nupkg
+              outputDir: $(Build.StagingDirectory)/nupkg
           - task: PublishPipelineArtifact@1
             displayName: 'Publish artifact'
             inputs:
