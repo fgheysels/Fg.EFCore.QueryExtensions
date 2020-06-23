@@ -27,7 +27,7 @@ stages:
             displayName: 'Build EFCore.QueryExtensions solution'
             inputs:
               projects: 'src/Fg.EFCore.QueryExtensions.sln'
-              arguments: --configuration $(Build.Configuration) /p:VersionPrefix=${{parameters.PackageMajorVersion}}.${{parameters.PackageMinorVersion}}.${{parameters.PackagePatchVersion}}
+              arguments: --configuration $(Build.Configuration) 
           - task: DotNetCoreCLI@2
             displayName: 'Run unittests'
             inputs:
@@ -55,7 +55,7 @@ stages:
               versioningScheme: byEnvVar
               versionEnvVar: PackageVersion
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
-              arguments: --configuration $(Build.Configuration)
+              arguments: --configuration $(Build.Configuration) /p:VersionPrefix=$PackageVersion
               outputDir: $(Build.StagingDirectory)/nupkg
           - task: PublishPipelineArtifact@1
             displayName: 'Publish artifact'
