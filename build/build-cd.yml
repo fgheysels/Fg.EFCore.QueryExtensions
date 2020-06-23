@@ -1,12 +1,16 @@
 name: $(date:yyyyMMdd)$(rev:.r)
 
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - src/*
+trigger: none
+pr: none
+
+parameters:
+- name: Package.MajorVersion
+  type: number
+- name: Package.MinorVersion
+  type: number
+- name: Package.PatchVersion
+  type: number
+
 
 variables:
 - name: Build.Configuration
@@ -40,10 +44,14 @@ stages:
             displayName: Package nuget Package
             inputs:
               command: 'pack'
-              includesymbols: true
-              includesource: true
+              includesymbols: false
+              includesource: false
+              majorVersion: ${{ parameters.Package.MajorVersion }} 
+              minorVersion: ${{ parameters.Package.MinorVersion }} 
+              patchVersion: ${{ parameters.Package.PatchVersion }} 
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
-              arguments: --configuration $(Build.Configuration) --output $(Build.StagingDirectory)
+              arguments: --configuration $(Build.Configuration)
+              packDestination: $(Build.StagingDirectory)/nupkg
           - task: PublishPipelineArtifact@1
             displayName: 'Publish artifact'
             inputs:
@@ -53,6 +61,6 @@ stages:
             displayName: 'Push to NuGet.org'
             inputs:
               command: push
-              packagesToPush: '$(Build.StagingDirectory)/*.nupkg'
+              packagesToPush: '$(Build.StagingDirectory)/nupkg/*.nupkg'
               nuGetFeedType: external
               publishFeedCredentials: 'nuget-push'
