@@ -4,11 +4,11 @@ trigger: none
 pr: none
 
 parameters:
-- name: Package.MajorVersion
+- name: PackageMajorVersion
   type: number
-- name: Package.MinorVersion
+- name: PackageMinorVersion
   type: number
-- name: Package.PatchVersion
+- name: PackagePatchVersion
   type: number
 
 
@@ -46,9 +46,9 @@ stages:
               command: 'pack'
               includesymbols: false
               includesource: false
-              majorVersion: ${{ parameters.Package.MajorVersion }} 
-              minorVersion: ${{ parameters.Package.MinorVersion }} 
-              patchVersion: ${{ parameters.Package.PatchVersion }} 
+              majorVersion: ${{ parameters.PackageMajorVersion }} 
+              minorVersion: ${{ parameters.PackageMinorVersion }} 
+              patchVersion: ${{ parameters.PackagePatchVersion }} 
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
               arguments: --configuration $(Build.Configuration)
               packDestination: $(Build.StagingDirectory)/nupkg
