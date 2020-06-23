@@ -22,18 +22,12 @@ stages:
       - job: Compile_and_test
         pool:
           vmImage: 'ubuntu-16.04'
-        steps:
-          - task: Powershell@2
-            displayName: 'Set version environment variable'
-            inputs:
-              targetType: inline
-              script: |
-                Write-Host "##vso[task.setvariable variable=PackageVersion]${{parameters.PackageMajorVersion}}.${{parameters.PackageMinorVersion}}.${{parameters.PackagePatchVersion}}"
+        steps:          
           - task: DotNetCoreCLI@2
             displayName: 'Build EFCore.QueryExtensions solution'
             inputs:
               projects: 'src/Fg.EFCore.QueryExtensions.sln'
-              arguments: --configuration $(Build.Configuration) /p:VersionPrefix=$(PackageVersion)
+              arguments: --configuration $(Build.Configuration) /p:VersionPrefix=${{parameters.PackageMajorVersion}}.${{parameters.PackageMinorVersion}}.${{parameters.PackagePatchVersion}}
           - task: DotNetCoreCLI@2
             displayName: 'Run unittests'
             inputs:
@@ -45,7 +39,13 @@ stages:
       - job: Package_and_push
         pool:
           vmImage: 'ubuntu-16.04'  
-        steps:           
+        steps:
+          - task: Powershell@2
+            displayName: 'Set version environment variable'
+            inputs:
+              targetType: inline
+              script: |
+                Write-Host "##vso[task.setvariable variable=PackageVersion]${{parameters.PackageMajorVersion}}.${{parameters.PackageMinorVersion}}.${{parameters.PackagePatchVersion}}"           
           - task: DotNetCoreCLI@2
             displayName: Package nuget Package
             inputs:
