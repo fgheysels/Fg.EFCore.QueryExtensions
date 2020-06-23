@@ -55,7 +55,7 @@ stages:
               versioningScheme: byEnvVar
               versionEnvVar: PackageVersion
               projects: 'src/Fg.EFCore.QueryExtensions/*.csproj'
-              arguments: --configuration $(Build.Configuration) /p:VersionPrefix=$PackageVersion
+              arguments: --configuration $(Build.Configuration) /p:VersionPrefix=$(PackageVersion)
               outputDir: $(Build.StagingDirectory)/nupkg
           - task: PublishPipelineArtifact@1
             displayName: 'Publish artifact'
