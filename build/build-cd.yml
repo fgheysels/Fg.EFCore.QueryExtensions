@@ -44,7 +44,7 @@ stages:
             displayName: 'Set NugetPackageVersion environment variable'
             inputs:
               targetType: inline
-              script: Write-Host[Environment]::SetEnvironmentVariable("NugetPackageVersion", "0.0.2", "User")
+              script: [Environment]::SetEnvironmentVariable("NugetPackageVersion", "0.0.2", "User")
           - task: DotNetCoreCLI@2
             displayName: Package nuget Package
             inputs:
