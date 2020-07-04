@@ -43,13 +43,13 @@ var results = await dbContext.Persons.Where(DbFilterExpression.LikeOneOf(nameof(
 An extension method is available which allows to easily create paged query results:
 
 ```csharp
-DataPage<Person> result = dbContext.Persons.ToPagedResults(pageNumber: 1, pageSize: 20);
+DataPage<Person> result = dbContext.Persons.ToPagedResultAsync(pageNumber: 1, pageSize: 20);
 ```
 
 This is an extension method on `IQueryable` so you're able to use it filtered expessions as well:
 
 ```csharp
-DataPage<Person> result = dbContext.Persons.Where(p => p.Name.Startswith("Fre")).ToPagedResults(pageNumber: 1, pageSize: 20);
+DataPage<Person> result = dbContext.Persons.Where(p => p.Name.Startswith("Fre")).ToPagedResultAsync(pageNumber: 1, pageSize: 20);
 ```
 
-> The `ToPagedResults` extension method will execute the query so it is important to have this method as the last part of your query expression.
+> The `ToPagedResult` extension method will execute the query so it is important to have this method as the last part of your query expression.

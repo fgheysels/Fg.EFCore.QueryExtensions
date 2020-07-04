@@ -47,7 +47,7 @@ namespace Fg.EFCore.QueryExtensions.Tests
         [Fact]
         public async Task CanRetrievePagedResults()
         {
-            var result = await _dbContext.Vessels.OrderBy(v => v.Id).ToPagedResult(1, 2);
+            var result = await _dbContext.Vessels.OrderBy(v => v.Id).ToPagedResultAsync(1, 2);
 
             Assert.Equal(1, result.PageNumber);
             Assert.Equal(2, result.Items.Count());
@@ -60,13 +60,13 @@ namespace Fg.EFCore.QueryExtensions.Tests
         [Fact]
         public async Task PagedResultsWithLastIncompletePage()
         {
-            var firstPage = await _dbContext.Vessels.ToPagedResult(1, 3);
+            var firstPage = await _dbContext.Vessels.ToPagedResultAsync(1, 3);
 
             Assert.Equal(1, firstPage.PageNumber);
             Assert.Equal(3, firstPage.Items.Count());
             Assert.Equal(4, firstPage.TotalNumberOfItems);
 
-            var secondPage = await _dbContext.Vessels.ToPagedResult(2, 3);
+            var secondPage = await _dbContext.Vessels.ToPagedResultAsync(2, 3);
 
             Assert.Equal(2, secondPage.PageNumber);
             Assert.Equal(1, secondPage.Items.Count());
@@ -78,7 +78,7 @@ namespace Fg.EFCore.QueryExtensions.Tests
         {
             var result = await _dbContext.Vessels
                                          .Where(DbFilterExpression.LikeOneOf<Vessel>(nameof(Vessel.Name), new[] { "Nau%", "%stat%" }))
-                                         .ToPagedResult(1, 2);
+                                         .ToPagedResultAsync(1, 2);
 
             Assert.Equal(1, result.PageNumber);
             Assert.Equal(2, result.TotalNumberOfItems);

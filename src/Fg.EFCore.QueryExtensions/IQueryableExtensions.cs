@@ -6,7 +6,7 @@ namespace Fg.EFCore.QueryExtensions
 {
     public static class IQueryableExtensions
     {
-        public static async Task<DataPage<T>> ToPagedResult<T>(this IQueryable<T> source, int pageNumber, int pageSize)
+        public static async Task<DataPage<T>> ToPagedResultAsync<T>(this IQueryable<T> source, int pageNumber, int pageSize)
         {
             int numberOfItems = await source.CountAsync();
 
