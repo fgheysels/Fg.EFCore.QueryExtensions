@@ -20,7 +20,15 @@ namespace Fg.EFCore.QueryExtensions
             TotalNumberOfItems = totalNumberOfItems;
             PageNumber = pageNumber;
             PageSize = pageSize;
-            TotalPages = (int)Math.Ceiling(TotalNumberOfItems / (double)pageSize);
+
+            if (totalNumberOfItems == 0)
+            {
+                TotalPages = 1;
+            }
+            else
+            {
+                TotalPages = (int)Math.Ceiling(TotalNumberOfItems / (double)pageSize);
+            }
         }
     }
 }
