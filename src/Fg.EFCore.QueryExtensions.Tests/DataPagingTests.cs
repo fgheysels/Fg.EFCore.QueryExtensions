@@ -84,6 +84,20 @@ namespace Fg.EFCore.QueryExtensions.Tests
             Assert.Equal(2, result.TotalNumberOfItems);
         }
 
+        [Fact]
+        public async Task PagedResultsOnEmptyResultsetDoesNotFail()
+        {
+            var result = await _dbContext.Vessels
+                                         .Where(v => false)
+                                         .ToPagedResultAsync(1, 10);
+
+            Assert.NotNull(result);
+            Assert.Equal(1, result.PageNumber);
+            Assert.Equal(1, result.TotalPages);
+            Assert.Equal(0, result.TotalNumberOfItems);
+            Assert.Empty(result.Items);
+        }
+
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
