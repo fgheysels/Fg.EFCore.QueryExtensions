@@ -1,3 +1,6 @@
+[![Build Status](https://frederikgheysels.visualstudio.com/GitHub%20Pipelines/_apis/build/status/Fg.EFCore.QueryExtensions%20CI?branchName=master)](https://frederikgheysels.visualstudio.com/GitHub%20Pipelines/_build/latest?definitionId=2&branchName=master)
+[![NuGet Badge](https://buildstats.info/nuget/Fg.EfCore.QueryExtensions)](https://www.nuget.org/packages/Fg.EfCore.QueryExtensions/)
+
 # Abstract
 
 This project contains some extensions to EF Core (3)
